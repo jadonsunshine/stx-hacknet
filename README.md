@@ -163,7 +163,7 @@ make down-prom
 ## Containers
 
 - **bitcoin**: Runs a bitcoin regtest node
-- **bitcoin-miner**: creates 3 bitcoin regtest wallets and mines regtest blocks at a configurable cadence
+- **bitcoin-miner**: creates 3 bitcoin regtest wallets and mines regtest blocks at a configurable cadence. After initial setup (~200 blocks), creates a dedicated "block-producer" wallet for ongoing Bitcoin block production to prevent conflicts with Stacks mining operations
 - **stacks-miner-1**: mines stacks blocks and sends events to stacks-signer-1
 - **stacks-miner-2**: mines stacks blocks and sends events to stacks-signer-2
 - **stacks-miner-3**: mines stacks blocks and sends events to stacks-signer-3
@@ -175,17 +175,28 @@ make down-prom
 - **stacker**: stack for `stacks-signer-1`, `stacks-signer-2` and `stacks-signer-3`
 - **tx-broadcaster**: submits token transfer txs to ensure stacks block production during a sortition
 
+## Bitcoin Miner
+*Dedicated address for Bitcoin block production after initial setup (~200 blocks). This prevents conflicts with Stacks mining operations.*
+
+```text
+‣ Mnemonic:               foot script pledge suit bread thing stage long auction craft label injury helmet drum ice govern glass tag lamp shield bike raccoon cloud hat
+‣ Private Key:            372aace2f66b6af7b195cffd5168133917fa87504acc422db4e8c273ce10d56f01
+‣ Public Key:             03d9ea1e7b47857ffc7611adc93eb2819d5996d3f63bcfd01508b51a4861671db1
+‣ BTC Address:            mqiURdmHMv61yJYjxKyMUjk7dfQRV9ffFF
+‣ WIF:                    cPRwPMm4JdEmJpCzFiwGP5ntdKj3pYN6ZWLQNRMAuH3HHei4Ph9N
+```
+
 ## Stacks Miner Accounts
 
 ### Miner 1
 
 ```text
-‣ Mnemonic:               lunar amount hard result reunion aisle goat fluid sorry modify minute pretty point visa cart material left tilt travel sausage library clutch wire tuna
-‣ Private Key:            23ad69119000a241706486b9349556bdc6dfabdf9d9131b153a57c6b0330fb0d01
-‣ Public Key:             0383bca67d28fce336ea7c2fc1120ecc63fbe55e89251e20587c2eb877f971e56b
-‣ BTC Address:            miEJtNKa3ASpA19v5ZhvbKTEieYjLpzCYT
-‣ Stacks Address:         ST19XY8C456FWH704JR77ZKFTPBNVNK52Q1CK01JD
-‣ WIF:                    cNn45HMeSuFeqg3pQESEuLz9FnmiYS83s11snXqDFqX4audaJbcb
+‣ Mnemonic:               dream toast small waste nature name common infant forget win box mountain climb genuine pole vote usage move frown onion raise lend cluster domain
+‣ Private Key:            e63a284b28a3144036dc7f789c4eaa0edd637a94f8be9124f12157f2f740186301
+‣ Public Key:             02377723916737a6436171dd7bb6e1b01d30958d29c1818f169c53448b45610bb1
+‣ BTC Address:            ms7WBhM8uXkvfxEQvVVTpr4AuL3KpnqPsv
+‣ Stacks Address:         ST1ZK49D6T6XDDMDVR7V3T5SYF0ET9N7DMCJV9ZKV
+‣ WIF:                    cVJEUhWLAVG9vx7RcnF6djdnXqkTG4qkPvjbgpbQBePF8FQyUpHb
 ‣ Miner Rewards
   ‣ Stacks address:         ST1XVSVQN0KP5SDYFNT8E5TXWVW0XZVQEDBMCJ3XM
   ‣ Private Key:            a6143d20cd73d0dce2179e2af7771372a95b9d6795924492bd4d15d17709531e01
@@ -196,16 +207,15 @@ make down-prom
 ### Miner 2
 
 ```text
-‣ Mnemonic:               cherry lawn pull huge drift wisdom capable bulk tragic street first foam onion above come smart eyebrow about soon jungle select used front ecology
-‣ Private Key:            1415e80bf3fe30fe95889c676681b4f64447f8888f718381840224b14ef4b97801
-‣ Public Key:             03a1940aedd43c39a39c73a1686faaabc67b6bd918d9710292e6c400308df0130e
-‣ BTC Address:            mxxRn3xP98tSJCUXxABq4dgg4SziNacF1Y
-‣ Stacks Address:         ST2ZMPYMHV80HGY99P9B81CN8E66JHBYVXB8P5F55
-‣ WIF:                    cNFkBfqr4tz3V7pcKbBvcibKsZ6XnTmcTwyWoqGm4CStmqN1bqh8
+‣ Mnemonic:               olive you plate doctor robot venture sniff aisle coffee roast resist leader language exist wreck alcohol feature best series social click company entire peanut
+‣ Private Key:            9803278e4c1db9e6d26c902549f52b3fe3c88fe9a5293c774721a9bc5bc9dfb301
+‣ Public Key:             0371b15f50be3a3498a2c26ce4d616c506ed0d8e6ce050c4ac7b0ffa40ca081829
+‣ BTC Address:            msgxV5Z9poN2SKent3RhURjiEqJy7WUCnD
+‣ Stacks Address:         ST22RBMZ4CMXYAVBED3KTMZEWRMA0ST6XSGBSX10H
+‣ WIF:                    cSgCBxt7hidTVjsCLm8wGBxKWa4JDjYPmHUsX41xbMc5cdkBMUvY
 ‣ Miner Rewards
   ‣ Stacks address:         ST2FW15NGB4H76FMVXKHYYSM865YVS6V3SA1GNABC
   ‣ Private Key:            fe3087801196d8027008146b13e6d365920c2e4b7bc9969729ec2f0f22ef74fc01
-  ‣ Mnemonic:               acoustic physical genre canal today zone confirm whale fashion payment blanket slush crumble version exercise catch candy birth meadow penalty until protect kid wage
   ‣ WIF:                    cW6p6zjVTXFXKQu3JmwfvRtkM5nAqCe1nakyhbd1VrZU59FJLew1
 
 ```
@@ -213,16 +223,15 @@ make down-prom
 ### Miner 3
 
 ```text
-‣ Mnemonic:               identify test gallery pave now pet just gospel erupt walnut demand oyster old trigger soup zoo sheriff oyster twenty tragic license casual twelve depth
-‣ Private Key:            c1c3f3f7bb8cc0b64c3be0f79488a3b1e3dbca62f23a5ac84e13beba78cc961301
-‣ Public Key:             025511871cb065df0ac108d149b5abe2267242745fd02b1d7a5fafb8dcf3ad66ce
-‣ BTC Address:            miBGjFEQveJSbzFwB9XJ9a4GmkY3Unmb7b
-‣ Stacks Address:         STEJYWJ2Y7E72AF9JMRWZWNR11ADBJBHD45P7D7K
-‣ WIF:                    cU5McyYQu1VJw6tzekyAJd1Jm9NVtjkPhrcbyVm8LgGdiW1Htrf4
+‣ Mnemonic:               rude fabric harsh mechanic until cricket field flag draw enough bitter flower people opera tackle horse unusual mass property height olympic artist demise major
+‣ Private Key:            19ff71655f1f5992f865fac2c840587ed328da32042a1c20e8b8be199a0b7b4101
+‣ Public Key:             03d13351e8f7b356b32289812479f7376dcd620cd76acad02352e41fe4edce500a
+‣ BTC Address:            mgKsVRnASphbAiSp81Ct9sJ4bgNkhtayij
+‣ Stacks Address:         ST4DZ2J4VWYBEQC0319V7CN8JDYE2WMESPSWMGDE
+‣ WIF:                    cNTEkvsFoTZnd3eJMH477uELJnktYZeCDWwy5PHgWYg6XvxHKNo5
 ‣ Miner Rewards
   ‣ Stacks address:         ST2MES40ZEXTX9M4YXW9QSWHRVC9HYT419S198VPM
   ‣ Private Key:            ed7eb063c61b8e892987228f1fcfb74eab5009568861613dc4b074b708a7893701
-  ‣ Mnemonic:               verb face bag shaft snack alcohol consider fork boat gate any energy property vessel olive system spin seek mean recipe layer catch anger bacon
   ‣ WIF:                    cVYMsUwHAZCdwfXZ2rgXWrFJDfqW2TrvLBAVpWCLCteCTTbv7UXL
 
 
