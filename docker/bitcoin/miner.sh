@@ -117,13 +117,35 @@ function mining_loop(){
     echo
     local mined_block_counter
     local block_height
+    local bitcoin_block_producer_wallet="${BITCOIN_BLOCK_PRODUCER_BTC_WALLET}"
+    local bitcoin_block_producer_addr="${BITCOIN_BLOCK_PRODUCER_BTC_ADDR}"
+
+    # Create dedicated block producer wallet for mining after initial setup
+    echo "Setting up dedicated block producer wallet..."
+    echo "    - wallet: ${bitcoin_block_producer_wallet}"
+    echo "    - address: ${bitcoin_block_producer_addr}"
+    if ! get_wallet_info "${bitcoin_block_producer_wallet}"; then
+        if ! create_wallet "${bitcoin_block_producer_wallet}"; then
+            echo "ERROR creating block producer wallet"
+            exit 1
+        fi
+    fi
+    # Import the predefined block producer address
+    if ! get_address_info "${bitcoin_block_producer_wallet}" "${bitcoin_block_producer_addr}"; then
+        if ! import_address "${bitcoin_block_producer_wallet}" "${bitcoin_block_producer_addr}"; then
+            echo "ERROR importing block producer address"
+            exit 1
+        fi
+    fi
+    echo "Block producer wallet setup complete"
+    echo
+
     mined_block_counter=0 # set the counter before the loop starts
     block_height=$(get_height) # get the block height
     while true; do
         echo "******************************************"
         local conf_counter=0
         local confs=""
-        local random="" # for tracking which array element we're using
         local sleep_duration=${MINE_INTERVAL}
         # loop through addresses and see if there are any mining txs in the list
         for i in $(seq 0 $((NUM_MINERS - 1)));do
@@ -139,11 +161,11 @@ function mining_loop(){
             else
                 echo "Detected Stacks mining mempool tx, mining btc block..."
             fi
-            random=$((0 + RANDOM % NUM_MINERS )) # random int with a range based on how many miners are defined. start from 0 since we're using an array
-            echo "Mining block to:"
-            echo "    - wallet: ${!WALLETS[$random]}"
-            echo "    - address: ${!ADDRESSES[$random]}"
-            echo "    - block hash: $(bitcoin-cli -rpcwallet="${!WALLETS[$random]}" -rpcconnect=bitcoin generatetoaddress 1 "${!ADDRESSES[$random]}" | awk -F, 'NR==2{ gsub(/[",]/,"");gsub (" ", "", $0);print $1}')"
+            # Mine to dedicated block producer address (not used for Stacks mining)
+            echo "Mining block to dedicated block producer:"
+            echo "    - wallet: ${bitcoin_block_producer_wallet}"
+            echo "    - address: ${bitcoin_block_producer_addr}"
+            echo "    - block hash: $(bitcoin-cli -rpcwallet="${bitcoin_block_producer_wallet}" -rpcconnect=bitcoin generatetoaddress 1 "${bitcoin_block_producer_addr}" | awk -F, 'NR==2{ gsub(/[",]/,"");gsub (" ", "", $0);print $1}')"
             mined_block_counter=$((mined_block_counter + 1 )) # increment the mined block counter (used when restarting from a chainstate snapshot)
             block_height=$((block_height + 1)) # increment the already retrieved block_height, incrementing in the loop
             DEFAULT_TIMEOUT=$(($(date +%s) + 30))
