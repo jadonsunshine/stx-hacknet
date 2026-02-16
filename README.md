@@ -1,4 +1,8 @@
+## Project Overview
 # Hacknet 
+## Getting Started
+## Contributing
+## License
 - Configured for 3 stacks miners and signers
 - bind-mounts a local filesystem for data persistence
 - Uses a chainstate archive to boot the network quickly
