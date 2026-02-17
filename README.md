@@ -1,5 +1,9 @@
 ## Project Overview
+## Project Overview
 # Hacknet 
+## Getting Started
+## Contributing
+## License
 ## Getting Started
 ## Contributing
 ## License
